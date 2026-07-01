@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do</title>
+
+<!-- Two fonts: Inter for everything readable, IBM Plex Mono just for dates/counts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <header class="app-header">
+    <h1 id="pageTitle">To-Do</h1>
+    <p id="taskCount">0 tasks</p>
+  </header>
+
+  <main class="task-list" id="taskList"></main>
+  <p class="empty-state" id="emptyState">Nothing here yet.</p>
+
+  <div class="bottom-bar">
+    <button class="history-btn" id="historyBtn" type="button">
+      <!-- simple clock icon -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M12 7v5l3 3"></path>
+      </svg>
+      <span id="historyLabel">Completed</span>
+    </button>
+
+    <button class="fab" id="addBtn" type="button" title="Add task">+</button>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+  <div class="sheet" id="sheet">
+    <h2>New task</h2>
+
+    <label for="taskInput">Task</label>
+    <input id="taskInput" type="text" placeholder="e.g. Submit assignment" maxlength="120">
+
+    <label for="deadlineInput">Deadline</label>
+    <input id="deadlineInput" type="date">
+
+    <div class="sheet-actions">
+      <button class="btn-secondary" id="cancelBtn" type="button">Cancel</button>
+      <button class="btn-primary" id="saveBtn" type="button">Add task</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

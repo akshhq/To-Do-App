@@ -1,0 +1,287 @@
+/* ---------- Design tokens ---------- */
+:root{
+  --bg:#F6F5F1;
+  --surface:#FFFFFF;
+  --border:#E7E4DC;
+  --text:#1C1C1A;
+  --text-soft:#8B887E;
+  --accent:#3E6259;      /* deep sage green */
+  --accent-soft:#DEE9E3;
+  --danger:#C1493D;
+  --danger-soft:#F6E1DD;
+  --warn:#B27F2A;
+  --warn-soft:#F3E7D2;
+  --radius:14px;
+  --radius-lg:22px;
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  margin:0;
+  height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter', system-ui, sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* Center a phone-shaped app on any screen; on an actual phone it just fills it. */
+body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+.app{
+  width:100%;
+  max-width:480px;
+  height:100vh;
+  max-height:1040px;
+  background:var(--bg);
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 0 40px rgba(0,0,0,0.06);
+}
+
+/* ---------- Header ---------- */
+.app-header{
+  padding:28px 24px 12px;
+  flex-shrink:0;
+}
+.app-header h1{
+  margin:0;
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:-0.02em;
+}
+.app-header p{
+  margin:4px 0 0;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13px;
+  color:var(--text-soft);
+}
+
+/* ---------- Task list ---------- */
+.task-list{
+  flex:1;
+  overflow-y:auto;
+  padding:8px 16px 100px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.task-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:14px 14px;
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+}
+.task-card.completed{
+  opacity:0.55;
+}
+
+/* Checkbox: a plain circle that fills in when checked */
+.checkbox{
+  width:22px;
+  height:22px;
+  min-width:22px;
+  border-radius:50%;
+  border:2px solid var(--accent);
+  background:var(--surface);
+  cursor:pointer;
+  margin-top:2px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background .15s ease, border-color .15s ease;
+}
+.checkbox.checked{
+  background:var(--accent);
+}
+.checkbox.checked::after{
+  content:"";
+  width:8px;
+  height:5px;
+  border-left:2px solid #fff;
+  border-bottom:2px solid #fff;
+  transform:rotate(-45deg) translate(1px,-1px);
+}
+
+.task-body{
+  flex:1;
+  min-width:0;
+}
+.task-text{
+  font-size:15px;
+  font-weight:500;
+  line-height:1.4;
+  word-break:break-word;
+}
+.task-card.completed .task-text{
+  text-decoration:line-through;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:6px;
+  padding:3px 8px;
+  border-radius:8px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  font-weight:500;
+  color:var(--text-soft);
+  background:var(--accent-soft);
+}
+.badge.overdue{ color:var(--danger); background:var(--danger-soft); }
+.badge.today{ color:var(--warn); background:var(--warn-soft); }
+.badge.none{ display:none; }
+
+.delete-btn{
+  background:none;
+  border:none;
+  color:var(--text-soft);
+  font-size:18px;
+  line-height:1;
+  cursor:pointer;
+  padding:4px;
+  border-radius:6px;
+}
+.delete-btn:hover{ color:var(--danger); }
+
+/* ---------- Empty state ---------- */
+.empty-state{
+  text-align:center;
+  color:var(--text-soft);
+  font-size:14px;
+  padding:60px 30px;
+  display:none;
+}
+
+/* ---------- Bottom bar ---------- */
+.bottom-bar{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:88px;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:linear-gradient(to top, var(--bg) 60%, transparent);
+}
+
+.history-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:10px 16px;
+  font-family:'Inter', sans-serif;
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+  cursor:pointer;
+}
+.history-btn.active{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+.history-btn svg{ width:16px; height:16px; }
+
+.fab{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  font-size:28px;
+  line-height:1;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 16px rgba(62,98,89,0.35);
+}
+.fab:active{ transform:scale(0.94); }
+
+/* ---------- Bottom sheet (add task) ---------- */
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.25);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease;
+}
+.overlay.show{ opacity:1; pointer-events:auto; }
+
+.sheet{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  background:var(--surface);
+  border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+  padding:24px 22px 28px;
+  transform:translateY(100%);
+  transition:transform .25s ease;
+}
+.sheet.show{ transform:translateY(0); }
+
+.sheet h2{
+  margin:0 0 16px;
+  font-size:18px;
+  font-weight:700;
+}
+.sheet label{
+  display:block;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--text-soft);
+  margin-top:14px;
+  margin-bottom:6px;
+}
+.sheet input{
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  font-family:'Inter', sans-serif;
+  font-size:14px;
+  background:var(--bg);
+  color:var(--text);
+}
+.sheet input:focus{
+  outline:2px solid var(--accent);
+  outline-offset:1px;
+}
+
+.sheet-actions{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
+}
+.btn-primary, .btn-secondary{
+  flex:1;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+}
+.btn-primary{ background:var(--accent); color:#fff; }
+.btn-secondary{ background:var(--bg); color:var(--text); border:1px solid var(--border); }
