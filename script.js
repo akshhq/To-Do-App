@@ -167,7 +167,7 @@ function render() {
     // Checkbox
     const checkbox = document.createElement("div");
     checkbox.className = "checkbox" + (task.completed ? " checked" : "");
-    checkbox.addEventListener("click", () => toggleComplete(task.id));
+    checkbox.addEventListener("click", () => handleCheckboxClick(task, card, checkbox));
 
     // Text + deadline badge
     const body = document.createElement("div");
@@ -225,6 +225,24 @@ function addTask(text, deadline) {
   tasks.push(newTask);
   saveTasks();
   render();
+}
+
+// Marking a task complete plays a swipe-left animation first, then
+// updates the data once the animation has finished. Un-completing a
+// task (from the Completed view) happens instantly, no animation.
+function handleCheckboxClick(task, card, checkbox) {
+  if (task.completed) {
+    toggleComplete(task.id);
+    return;
+  }
+
+  // Show the checked state right away for instant feedback
+  checkbox.classList.add("checked");
+  card.classList.add("completing");
+
+  card.addEventListener("animationend", () => {
+    toggleComplete(task.id);
+  }, { once: true });
 }
 
 function toggleComplete(id) {

@@ -88,6 +88,35 @@ body{
   opacity:0.55;
 }
 
+/* Swipe-left animation played once, right when a task is checked off */
+@keyframes completeSwipe{
+  0%{
+    transform:translateX(0);
+    background:var(--surface);
+    box-shadow:none;
+  }
+  35%{
+    background:var(--accent-soft);
+    box-shadow:-18px 0 22px -6px rgba(94,166,132,0.45);
+  }
+  100%{
+    transform:translateX(-40px);
+    opacity:0;
+    background:var(--accent-soft);
+    box-shadow:-34px 0 30px -8px rgba(94,166,132,0);
+  }
+}
+.task-card.completing{
+  animation:completeSwipe 0.45s ease forwards;
+  pointer-events:none;
+}
+@media (prefers-reduced-motion: reduce){
+  .task-card.completing{
+    animation:none;
+    opacity:0;
+  }
+}
+
 /* Checkbox: a plain circle that fills in when checked */
 .checkbox{
   width:22px;
